@@ -48,14 +48,13 @@ $(function() {
     });
     /* A new test suite named "The menu" */
     describe('The menu', function() {
-        const body = document.body;
         /* A test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
          it('is hidden by default', function() {
-           expect(body.className).toContain('menu-hidden');
+           expect($('body').hasClass('menu-hidden')).toEqual(true);
          });
          /* A test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
@@ -63,13 +62,11 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
           it('changes visibility on click', function() {
-            const menu = document.body.querySelector('.menu-icon-link');
+            $('.menu-icon-link').click();
+            expect($('body').hasClass('menu-hidden')).toEqual(false);
 
-            menu.click();
-            expect(body.className).not.toContain('menu-hidden');
-
-            menu.click();
-            expect(body.className).toContain('menu-hidden');
+            $('.menu-icon-link').click();
+            expect($('body').hasClass('menu-hidden')).toEqual(true);
           });
     });
     /* A new test suite named "Initial Entries" */
@@ -85,10 +82,7 @@ $(function() {
          });
 
          it('loads at least one .entry element into the .feed container', function(done) {
-           const feed = document.getElementsByClassName('feed');
-           const entry = document.getElementsByClassName('entry');
-
-           expect(feed.length && entry.length).toBeGreaterThan(0);
+           expect($('.feed .entry').length).toBeGreaterThan(0);
            done();
          });
     });
@@ -102,14 +96,13 @@ $(function() {
 
          beforeEach(function(done) {
            loadFeed(0, function() {
-             intialFeed = document.querySelector('.feed').innerHTML;
+             intialFeed = $('.feed').html();
              loadFeed(1, done);
            });
          });
 
          it('ensures new feeds load', function(done) {
-           const currentFeed = document.querySelector('.feed').innerHTML;
-           expect(initialFeed).not.toEqual(currentFeed);
+           expect($('.feed').html()).not.toEqual(initialFeed);
            done();
          });
     });
