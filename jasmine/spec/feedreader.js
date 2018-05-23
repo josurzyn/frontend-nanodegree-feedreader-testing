@@ -104,7 +104,7 @@ $(function() {
            loadFeed(0, function() {
              intialFeed = document.querySelector('.feed').innerHTML;
              loadFeed(1, done);
-           })
+           });
          });
 
          it('ensures new feeds load', function(done) {
