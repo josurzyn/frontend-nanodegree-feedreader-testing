@@ -105,12 +105,18 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+         let initialFeed = 0;
+
          beforeEach(function(done) {
-           loadFeed(0, done);
+           loadFeed(0, function() {
+             intialFeed = document.querySelector('.feed').innerHTML;
+             loadFeed(1, done);
+           })
          });
 
          it('ensures new feeds load', function(done) {
-
+           const currentFeed = document.querySelector('.feed').innerHTML;
+           expect(initialFeed).not.toEqual(currentFeed);
            done();
          });
     });
